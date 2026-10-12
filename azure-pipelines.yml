@@ -73,3 +73,24 @@ stages:
           - publish: "$(Build.ArtifactStagingDirectory)/backend.zip"
             artifact: backend
             displayName: Publish Backend Artifact
+
+  - stage: TestLocalAgent
+    displayName: Test Local Windows Agent
+    dependsOn: Build
+
+    jobs:
+      - job: VerifyAgent
+        displayName: Verify LoanCalculatorAgent
+        pool:
+          name: Practice
+
+        steps:
+          - checkout: none
+
+          - powershell: |
+              Write-Host "Self-hosted agent is working!"
+              Write-Host "Computer: $env:COMPUTERNAME"
+              Write-Host "User: $env:USERNAME"
+              node --version
+              npm --version
+            displayName: Verify Local Environment
