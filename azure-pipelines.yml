@@ -94,3 +94,41 @@ stages:
               node --version
               npm --version
             displayName: Verify Local Environment
+
+  - stage: DeployLocal
+    displayName: Deploy to Local Machine
+    dependsOn: TestLocalAgent
+
+    jobs:
+      - job: DeployLocalJob
+        pool:
+          name: Practice
+          demands:
+            - Agent.Name -equals LoanCalculatorAgent
+
+        steps:
+          - checkout: none
+
+          - download: current
+            artifact: frontend
+
+          - download: current
+            artifact: backend
+
+          - powershell: |
+              $root = "C:\local-deploy\loan-calculator"
+
+              New-Item -ItemType Directory -Force "$root\frontend" | Out-Null
+              New-Item -ItemType Directory -Force "$root\backend" | Out-Null
+
+              Expand-Archive `
+                "$(Pipeline.Workspace)\frontend\frontend.zip" `
+                "$root\frontend" -Force
+
+              Expand-Archive `
+                "$(Pipeline.Workspace)\backend\backend.zip" `
+                "$root\backend" -Force
+
+              Write-Host "Artifacts extracted successfully."
+              Write-Host "Location: $root"
+            displayName: Download and Extract Artifacts
