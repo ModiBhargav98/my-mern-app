@@ -145,7 +145,7 @@ export default function EmiCalculator() {
                   <th scope="col">Amount</th>
                   <th scope="col">Interest</th>
                   <th scope="col">Months</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
