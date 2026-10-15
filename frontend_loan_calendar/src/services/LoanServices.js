@@ -1,5 +1,6 @@
 import axios from "axios";
-const LOAN_API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+
+const LOAN_API_URL = process.env.REACT_APP_API_URL;
 
 class LoanServices {
   LoginUser(Detail) {

@@ -32,6 +32,8 @@ stages:
           - script: npm run build
             workingDirectory: $(frontendDirectory)
             displayName: Build React Application
+            env:
+              REACT_APP_API_URL: /api
 
           - task: ArchiveFiles@2
             displayName: Archive Frontend
