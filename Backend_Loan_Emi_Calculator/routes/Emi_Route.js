@@ -7,6 +7,6 @@ const {
 const emiRouter = express.Router();
 
 emiRouter.get("/get-emi-details/:userId", authentication, getEmiHistory);
-emiRouter.put("/loan-emi/:userId", authentication, createEmiHistory);
+emiRouter.put("/loan-emis/:userId", authentication, createEmiHistory);
 
 module.exports = emiRouter;
