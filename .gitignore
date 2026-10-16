@@ -10,12 +10,10 @@ node_modules/
 out/
 
 # Environment files
+# (frontend .env.development/.env.production are committed - no secrets)
+# (backend .env.* are ignored in Backend_Loan_Emi_Calculator/.gitignore)
 .env
 .env*.local
-.env.development
-.env.test
-.env.production
-!.env.example
 
 # Logs
 npm-debug.log*

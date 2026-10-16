@@ -29,11 +29,10 @@ stages:
             workingDirectory: $(frontendDirectory)
             displayName: Install Frontend Dependencies
 
+          # react-scripts build always uses frontend_loan_calendar/.env.production
           - script: npm run build
             workingDirectory: $(frontendDirectory)
             displayName: Build React Application
-            env:
-              REACT_APP_API_URL: /api
 
           - task: ArchiveFiles@2
             displayName: Archive Frontend
@@ -133,4 +132,14 @@ stages:
 
               Write-Host "Artifacts extracted successfully."
               Write-Host "Location: $root"
+
+              # Backend secrets are NOT in git. Keep .env.production on this machine once:
+              #   C:\local-deploy\loan-calculator\backend\.env.production
+              # (Expand-Archive -Force does not delete it on next deploy)
+              if (-not (Test-Path "$root\backend\.env.production")) {
+                Write-Host "##vso[task.logissue type=warning]Missing $root\backend\.env.production - backend will not start. Create it with PORT, MONGO_URI, JWT_SECRET."
+              } else {
+                Write-Host "Backend .env.production found."
+              }
+              Write-Host "Start backend with: npm run start:prod"
             displayName: Download and Extract Artifacts
