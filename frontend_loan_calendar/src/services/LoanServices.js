@@ -10,7 +10,7 @@ class LoanServices {
     return axios.post(LOAN_API_URL + "/create-user", Detail);
   }
   AddEmiDetails(userId, data, token) {
-    return axios.put(LOAN_API_URL + "/loan-emi/" + userId, data, {
+    return axios.put(LOAN_API_URL + "/loan-emis/" + userId, data, {
       headers: {
         Authorization: token,
       },
